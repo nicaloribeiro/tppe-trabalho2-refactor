@@ -1,12 +1,16 @@
 package app;
 
 import java.io.File;
+import java.io.IOException;
 
 public class Parser {
+	private String nomeArquivo;
 	private File arquivo;
+	private File arquivoSaida;
 	private String delimitador;
 	
 	public void leArquivo(String nomeArquivo) throws ArquivoNaoEncontradoException {
+		this.nomeArquivo = nomeArquivo;
 		File arquivo = new File(nomeArquivo);
 		
 		if (!arquivo.exists()) {
@@ -18,9 +22,21 @@ public class Parser {
 	
 	public void definirDelimitador(String delimitador) throws DelimitadorInvalidoException {
 		if(delimitador.length() > 1) {
-			throw new DelimitadorInvalidoException("O delimitador é inválido.");
+			throw new DelimitadorInvalidoException("O delimitador ï¿½ invï¿½lido.");
 		} else {
 			this.delimitador = delimitador;
+		}
+	}
+
+	public void criaArquivoSaida() throws EscritaNaoPermitidaException, IOException {
+		String nomeArquivoSaida = this.nomeArquivo.replace(".", "Tab.");
+		File arquivo = new File(nomeArquivoSaida);
+		arquivo.createNewFile();
+		
+		if (!arquivo.canWrite()) {
+			throw new EscritaNaoPermitidaException("Escrita nÃ£o permitida.");
+		} else {
+			this.arquivoSaida = arquivo;
 		}
 	}
 }
