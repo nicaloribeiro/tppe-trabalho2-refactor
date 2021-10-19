@@ -1,10 +1,17 @@
 package app;
 
+import java.io.File;
+
 public class Parser {
+	private File arquivo;
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	public void leArquivo(String nomeArquivo) throws ArquivoNaoEncontradoException {
+		File arquivo = new File(nomeArquivo);
+		
+		if (!arquivo.exists()) {
+			throw new ArquivoNaoEncontradoException(nomeArquivo + " não encontrado.");
+		} else {
+			this.arquivo = arquivo;
+		}
 	}
-
 }
