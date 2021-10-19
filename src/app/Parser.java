@@ -3,10 +3,13 @@ package app;
 import java.io.File;
 
 public class Parser {
+	private String nomeArquivo;
 	private File arquivo;
+	private File arquivoSaida;
 	private String delimitador;
 	
 	public void leArquivo(String nomeArquivo) throws ArquivoNaoEncontradoException {
+		this.nomeArquivo = nomeArquivo;
 		File arquivo = new File(nomeArquivo);
 		
 		if (!arquivo.exists()) {
@@ -24,7 +27,15 @@ public class Parser {
 		}
 	}
 
-	public void criaArquivoSaida() {
-		return;
+	public void criaArquivoSaida() throws Exception {
+		String nomeArquivoSaida = this.nomeArquivo.replace(".", "Tab.");
+		File arquivo = new File(nomeArquivoSaida);
+		arquivo.createNewFile();
+		
+		if (!arquivo.canWrite()) {
+			throw new Exception();
+		} else {
+			this.arquivoSaida = arquivo;
+		}
 	}
 }
