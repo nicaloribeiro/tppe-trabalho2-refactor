@@ -5,11 +5,11 @@ import java.io.File;
 public class Parser {
 	private File arquivo;
 
-	public void leArquivo(String nomeArquivo) throws Exception {
+	public void leArquivo(String nomeArquivo) throws ArquivoNaoEncontradoException {
 		File arquivo = new File(nomeArquivo);
 		
 		if (!arquivo.exists()) {
-			throw new Exception();
+			throw new ArquivoNaoEncontradoException(nomeArquivo + " não encontrado.");
 		} else {
 			this.arquivo = arquivo;
 		}

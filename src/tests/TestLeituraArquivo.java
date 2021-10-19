@@ -5,9 +5,10 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import app.ArquivoNaoEncontradoException;
 import app.Parser;
 
-public class Tests {
+public class TestLeituraArquivo {
 	
 	private Parser parser;
 	
@@ -55,5 +56,18 @@ public class Tests {
 		}
 		
 		assertEquals(status, true);
+	}
+
+	@Test
+	public void testArquivoNaoEncontrado() {
+		String message = "";
+		
+		try {
+			parser.leArquivo("chambioá.out");
+		} catch (ArquivoNaoEncontradoException e) {
+			message = e.getMessage();
+		}
+		
+		assertEquals(message, "chambioá.out não encontrado.");
 	}
 }
