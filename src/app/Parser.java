@@ -1,6 +1,7 @@
 package app;
 
 import java.io.File;
+import java.io.IOException;
 
 public class Parser {
 	private String nomeArquivo;
@@ -27,13 +28,13 @@ public class Parser {
 		}
 	}
 
-	public void criaArquivoSaida() throws Exception {
+	public void criaArquivoSaida() throws EscritaNaoPermitidaException, IOException {
 		String nomeArquivoSaida = this.nomeArquivo.replace(".", "Tab.");
 		File arquivo = new File(nomeArquivoSaida);
 		arquivo.createNewFile();
 		
 		if (!arquivo.canWrite()) {
-			throw new Exception();
+			throw new EscritaNaoPermitidaException("Escrita não permitida.");
 		} else {
 			this.arquivoSaida = arquivo;
 		}
