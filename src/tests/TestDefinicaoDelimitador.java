@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import app.ArquivoNaoEncontradoException;
+import app.DelimitadorInvalidoException;
 import app.Parser;
 
 public class TestDefinicaoDelimitador {
@@ -37,5 +39,34 @@ private Parser parser;
 		}	
 		assertEquals(status, true);
 	}
+	
+	@Test
+	public void testeDefinicaoDelimitador3() {
+		Boolean status = true;
+		
+		try {
+			parser.definirDelimitador("\n");
+			parser.definirDelimitador(";");
+			parser.definirDelimitador(",");
+		} catch (Exception e) {
+			status = false;
+		}
+		
+		assertEquals(status, true);
+	}
+	
+	@Test
+	public void testDelimitadorInvalido() throws DelimitadorInvalidoException  {
+		String message = "";
+		
+		try {
+			parser.definirDelimitador("delimitador");
+		} catch (DelimitadorInvalidoException e) {
+			message = e.getMessage();
+		}
+		
+		assertEquals(message, "O delimitador é inválido.");
+	}
+	
 
 }

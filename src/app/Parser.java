@@ -16,9 +16,9 @@ public class Parser {
 		}
 	}
 	
-	public void definirDelimitador(String delimitador) throws Exception {
+	public void definirDelimitador(String delimitador) throws DelimitadorInvalidoException {
 		if(delimitador.length() > 1) {
-			throw new Exception();
+			throw new DelimitadorInvalidoException("O delimitador é inválido.");
 		} else {
 			this.delimitador = delimitador;
 		}
