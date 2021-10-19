@@ -41,4 +41,19 @@ public class Tests {
 		
 		assertEquals(status, true);
 	}
+	
+	@Test
+	public void testLeituraArquivo3() {
+		Boolean status = true;
+		
+		try {
+			parser.leArquivo("analysisTime.out");
+			parser.leArquivo("analysisMemory.out");
+			parser.leArquivo("analysisTest.out");
+		} catch (Exception e) {
+			status = false;
+		}
+		
+		assertEquals(status, true);
+	}
 }
