@@ -26,5 +26,16 @@ private Parser parser;
 		}	
 		assertEquals(status, true);
 	}
+	
+	@Test
+	public void testeDefinicaoDelimitador2() {
+		Boolean status = true;
+		try {
+			parser.definirDelimitador("\n");
+		} catch (Exception e) {
+			status = false;
+		}	
+		assertEquals(status, true);
+	}
 
 }
