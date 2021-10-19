@@ -28,4 +28,17 @@ public class Tests {
 		
 		assertEquals(status, true);
 	}
+	
+	@Test
+	public void testLeituraArquivo2() {
+		Boolean status = true;
+		
+		try {
+			parser.leArquivo("analysisMemory.out");
+		} catch (Exception e) {
+			status = false;
+		}
+		
+		assertEquals(status, true);
+	}
 }
