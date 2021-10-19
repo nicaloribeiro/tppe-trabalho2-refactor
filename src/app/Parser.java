@@ -14,4 +14,8 @@ public class Parser {
 			this.arquivo = arquivo;
 		}
 	}
+	
+	public void definirDelimitador(String delimitador) {
+		return;
+	}
 }
