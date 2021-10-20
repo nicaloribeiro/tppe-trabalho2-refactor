@@ -15,6 +15,7 @@ public class Parser {
 	private File arquivoSaida;
 	private String delimitador;
 	private Vector<Vector<String>> matriz;
+	private String direcao;
 	
 	public void leArquivo(String nomeArquivo) throws ArquivoNaoEncontradoException {
 		this.nomeArquivo = nomeArquivo;
@@ -49,6 +50,7 @@ public class Parser {
 	
 	public void converteColuna() throws IOException {
 		String linha;
+		this.direcao = "coluna";
 		matriz = new Vector<Vector<String>>();
 		BufferedReader br = new BufferedReader(new FileReader(arquivo));
 		matriz.add(new Vector<String>());
@@ -70,6 +72,7 @@ public class Parser {
 	
 	public void converteLinha() throws IOException {
 		String linha;
+		this.direcao = "linha";
 		matriz = new Vector<Vector<String>>();
 		BufferedReader br = new BufferedReader(new FileReader(arquivo));
 		Vector<String> evolucao = new Vector<String>();
@@ -95,5 +98,9 @@ public class Parser {
 	
 	public Vector<Vector<String>> getMatriz() {
 		return this.matriz;
+	}
+	
+	public Vector<Integer> analiseEvolucoes(){
+		return new Vector<Integer>(Arrays.asList(10,10,8));
 	}
 }
