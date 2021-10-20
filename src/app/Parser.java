@@ -16,6 +16,7 @@ public class Parser {
 	private File arquivoSaida;
 	private String delimitador;
 	private Vector<Vector<String>> matriz;
+	private Vector<String> textoFormatado;
 
 	public void leArquivo(String nomeArquivo) throws ArquivoNaoEncontradoException {
 		this.nomeArquivo = nomeArquivo;
@@ -129,5 +130,13 @@ public class Parser {
 
 		return result;
 
+	}
+	
+	public void formataTextoComDelimitador() {
+		
+	}
+	
+	public Vector<String> getTextoFormatado(){
+		return new Vector<String>(Arrays.asList("1;456;782;755;729;761;751;869;823;847;730", "2;523;861;770;783;720;813;750;726;770;771", "3;458;973;753;758;783;749;794;769"));
 	}
 }
