@@ -70,5 +70,37 @@ public class TestArquivoTextoFinal {
 		Vector<String> coluna = new Vector<String>(Arrays.asList("1;2;3","456;523;458", "782;861;973","755;770;753","729;783;758","761;720;783","751;813;749","869;750;794","823;726;769","847;770","730;771"));
 		assertEquals(coluna, parser.getTextoFormatado());
 	}
+	
+	@Test
+	public void testEscreveArquivoFinal() {
+		Boolean status = true;
+		try {
+			parser.leArquivo("analysisTest.out");
+			parser.definirDelimitador(";");
+			parser.criaArquivoSaida();
+			parser.converteLinha();
+			parser.formataTextoComDelimitador();
+			parser.escreveTextoSaida();
+		} catch (Exception e) {
+			status = false;
+		}
+		assertEquals(true,status);
+	}
+	
+	@Test
+	public void testEscreveArquivoFinal2() {
+		Boolean status = true;
+		try {
+			parser.leArquivo("analysisTest.out");
+			parser.definirDelimitador(";");
+			parser.criaArquivoSaida();
+			parser.converteColuna();
+			parser.formataTextoComDelimitador();
+			parser.escreveTextoSaida();
+		} catch (Exception e) {
+			status = false;
+		}
+		assertEquals(true,status);
+	}
 
 }
