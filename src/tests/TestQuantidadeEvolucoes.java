@@ -34,4 +34,16 @@ public class TestQuantidadeEvolucoes {
 		assertEquals(result,parser.analiseEvolucoes());
 		
 	}
+	
+	@Test
+	public void testQuantidadeEvolucoes3() throws IOException {
+		parser.leArquivo("analysisMemory.out");
+		result = new Vector<Integer>(Arrays.asList(11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11));
+		assertEquals(result,parser.analiseEvolucoes());
+		parser.leArquivo("analysisTime.out");
+		assertEquals(result,parser.analiseEvolucoes());
+		parser.leArquivo("analysisTest.out");
+		result = new Vector<Integer>(Arrays.asList(10,10,8));
+		assertEquals(result,parser.analiseEvolucoes());
+	}
 }
