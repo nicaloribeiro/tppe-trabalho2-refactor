@@ -1,9 +1,11 @@
 package app;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Vector;
@@ -16,6 +18,7 @@ public class Parser {
 	private File arquivoSaida;
 	private String delimitador;
 	private Vector<Vector<String>> matriz;
+	private Vector<String> textoFormatado;
 
 	public void leArquivo(String nomeArquivo) throws ArquivoNaoEncontradoException {
 		this.nomeArquivo = nomeArquivo;
@@ -129,5 +132,30 @@ public class Parser {
 
 		return result;
 
+	}
+
+	public void formataTextoComDelimitador() {
+		this.textoFormatado = new Vector<String>();
+		for (Vector<String> arr : this.matriz) {
+			String result = "";
+			for (String str : arr) {
+				result += str;
+				result += this.delimitador;
+			}
+			this.textoFormatado.add(result.substring(0, result.length() - 1));
+		}
+	}
+
+	public Vector<String> getTextoFormatado() {
+		return this.textoFormatado;
+	}
+
+	public void escreveTextoSaida() throws IOException, EscritaNaoPermitidaException {
+		BufferedWriter bw = new BufferedWriter(new FileWriter(this.arquivoSaida));
+		for (String linha : this.textoFormatado) {
+			bw.write(linha);
+			bw.write("\n");
+		}
+		bw.close();
 	}
 }
