@@ -1,9 +1,13 @@
 package app;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Vector;
+
+import javax.sound.sampled.Line;
 
 public class Parser {
 	private String nomeArquivo;
@@ -43,38 +47,53 @@ public class Parser {
 		}
 	}
 	
-	public void converteColuna() {
-		this.matriz = new Vector<Vector<String>>(
-				Arrays.asList(
-						new Vector<String>(Arrays.asList("1", "2", "3")),
-						new Vector<String>(Arrays.asList("456", "523", "458")),
-						new Vector<String>(Arrays.asList("782", "861", "973")),
-						new Vector<String>(Arrays.asList("755", "770", "753")),
-						new Vector<String>(Arrays.asList("729", "783", "758")),
-						new Vector<String>(Arrays.asList("761", "720", "783")),
-						new Vector<String>(Arrays.asList("751", "813", "749")),
-						new Vector<String>(Arrays.asList("869", "750", "794")),
-						new Vector<String>(Arrays.asList("823", "726", "769")),
-						new Vector<String>(Arrays.asList("847", "770")),
-						new Vector<String>(Arrays.asList("730", "771"))
-						)
-				);
-		return;
+	public void converteColuna() throws IOException {
+		String linha;
+		matriz = new Vector<Vector<String>>();
+		BufferedReader br = new BufferedReader(new FileReader(arquivo));
+		matriz.add(new Vector<String>());
+		int i = 0;
 		
+		while((linha = br.readLine()) != null) {
+			if (linha.charAt(0) == '-') {
+				i = 0;
+				matriz.elementAt(i).add(linha.replaceAll("[^0-9]", ""));
+			} else {
+				if (matriz.size() < i + 1) matriz.add(new Vector<String>());
+				matriz.elementAt(i).add(linha);
+			}
+			i++;
+		}
+		
+		br.close();
 	}
 	
-	public void converteLinha() {
-		this.matriz = new Vector<Vector<String>>(
-				Arrays.asList(
-						new Vector<String>(Arrays.asList("1", "456", "782", "755", "729", "761", "751", "869", "823", "847", "730")),
-						new Vector<String>(Arrays.asList("2", "523", "861", "770", "783", "720", "813", "750", "726", "770", "771")),
-						new Vector<String>(Arrays.asList("3", "458", "973", "753", "758", "783", "749", "794", "769"))
-						)
-				);
-		return;
+	public void converteLinha() throws IOException {
+		String linha;
+		matriz = new Vector<Vector<String>>();
+		BufferedReader br = new BufferedReader(new FileReader(arquivo));
+		Vector<String> evolucao = new Vector<String>();
+		
+		while((linha = br.readLine()) != null) {
+			if (linha.charAt(0) == '-') {
+				if (!evolucao.isEmpty()) {
+					matriz.add(evolucao);
+				}			
+				evolucao = new Vector<String>();
+				evolucao.add(linha.replaceAll("[^0-9]", ""));	
+			} else {
+				evolucao.add(linha);
+			}
+		}
+		
+		if (!evolucao.isEmpty()) {
+			matriz.add(evolucao);
+		}
+		
+		br.close();
 	}
 	
-	public Vector<Vector<String>> getMatriz() {
+	public Vector<Vector<String>> getMatriz() {	
 		return this.matriz;
 	}
 }
