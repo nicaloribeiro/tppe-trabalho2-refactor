@@ -133,10 +133,30 @@ public class Parser {
 	}
 	
 	public void formataTextoComDelimitador() {
-		
+		this.textoFormatado = new Vector<String>();
+		if(this.delimitador.equals(";")) {
+			for (Vector<String> arr : this.matriz) {
+				String result = "";
+				for(String str : arr) {
+					result += str;
+					result += ";";
+				}
+				this.textoFormatado.add(result.replaceFirst(".$",""));				
+			}
+		}
+		if(this.delimitador.equals(",")) {
+			for (Vector<String> arr : this.matriz) {
+				String result = "";
+				for(String str : arr) {
+					result += str;
+					result += ",";
+				}
+				this.textoFormatado.add(result.replaceFirst(".$",""));				
+			}
+		}
 	}
 	
 	public Vector<String> getTextoFormatado(){
-		return new Vector<String>(Arrays.asList("1;456;782;755;729;761;751;869;823;847;730", "2;523;861;770;783;720;813;750;726;770;771", "3;458;973;753;758;783;749;794;769"));
+			return this.textoFormatado;
 	}
 }
