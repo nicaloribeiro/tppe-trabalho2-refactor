@@ -134,26 +134,14 @@ public class Parser {
 	
 	public void formataTextoComDelimitador() {
 		this.textoFormatado = new Vector<String>();
-		if(this.delimitador.equals(";")) {
 			for (Vector<String> arr : this.matriz) {
 				String result = "";
 				for(String str : arr) {
 					result += str;
-					result += ";";
+					result += this.delimitador;
 				}
-				this.textoFormatado.add(result.replaceFirst(".$",""));				
-			}
-		}
-		if(this.delimitador.equals(",")) {
-			for (Vector<String> arr : this.matriz) {
-				String result = "";
-				for(String str : arr) {
-					result += str;
-					result += ",";
-				}
-				this.textoFormatado.add(result.replaceFirst(".$",""));				
-			}
-		}
+				this.textoFormatado.add(result.substring(0, result.length()-1));				
+			}	
 	}
 	
 	public Vector<String> getTextoFormatado(){
