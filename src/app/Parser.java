@@ -1,13 +1,20 @@
 package app;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Vector;
+
+import javax.sound.sampled.Line;
 
 public class Parser {
 	private String nomeArquivo;
 	private File arquivo;
 	private File arquivoSaida;
 	private String delimitador;
+	private Vector<Vector<String>> matriz;
 	
 	public void leArquivo(String nomeArquivo) throws ArquivoNaoEncontradoException {
 		this.nomeArquivo = nomeArquivo;
@@ -38,5 +45,55 @@ public class Parser {
 		} else {
 			this.arquivoSaida = arquivo;
 		}
+	}
+	
+	public void converteColuna() throws IOException {
+		String linha;
+		matriz = new Vector<Vector<String>>();
+		BufferedReader br = new BufferedReader(new FileReader(arquivo));
+		matriz.add(new Vector<String>());
+		int i = 0;
+		
+		while((linha = br.readLine()) != null) {
+			if (linha.charAt(0) == '-') {
+				i = 0;
+				matriz.elementAt(i).add(linha.replaceAll("[^0-9]", ""));
+			} else {
+				if (matriz.size() < i + 1) matriz.add(new Vector<String>());
+				matriz.elementAt(i).add(linha);
+			}
+			i++;
+		}
+		
+		br.close();
+	}
+	
+	public void converteLinha() throws IOException {
+		String linha;
+		matriz = new Vector<Vector<String>>();
+		BufferedReader br = new BufferedReader(new FileReader(arquivo));
+		Vector<String> evolucao = new Vector<String>();
+		
+		while((linha = br.readLine()) != null) {
+			if (linha.charAt(0) == '-') {
+				if (!evolucao.isEmpty()) {
+					matriz.add(evolucao);
+				}			
+				evolucao = new Vector<String>();
+				evolucao.add(linha.replaceAll("[^0-9]", ""));	
+			} else {
+				evolucao.add(linha);
+			}
+		}
+		
+		if (!evolucao.isEmpty()) {
+			matriz.add(evolucao);
+		}
+		
+		br.close();
+	}
+	
+	public Vector<Vector<String>> getMatriz() {
+		return this.matriz;
 	}
 }
