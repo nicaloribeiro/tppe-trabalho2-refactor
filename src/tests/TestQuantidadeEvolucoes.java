@@ -3,21 +3,18 @@ package tests;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Vector;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import app.ArquivoNaoEncontradoException;
 import app.Parser;
 
 public class TestQuantidadeEvolucoes {
 	
 	private Parser parser;
 	private Vector<Integer> result;
-	private Vector<Vector<String>> arrayLido;
 	
 	@Before
 	public void setup() {
@@ -27,8 +24,14 @@ public class TestQuantidadeEvolucoes {
 	@Test
 	public void testQuantidadeEvolucoes1() throws IOException {
 		parser.leArquivo("analysisTest.out");
-		parser.converteLinha();
 		result = new Vector<Integer>(Arrays.asList(10,10,8));
 		assertEquals(result,parser.analiseEvolucoes());
+	}
+	@Test
+	public void testQuantidadeEvolucoes2() throws IOException {
+		parser.leArquivo("analysisTime.out");
+		result = new Vector<Integer>(Arrays.asList(11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11));
+		assertEquals(result,parser.analiseEvolucoes());
+		
 	}
 }
