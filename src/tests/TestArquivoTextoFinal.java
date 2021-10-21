@@ -67,7 +67,7 @@ public class TestArquivoTextoFinal {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Vector<String> coluna = new Vector<String>(Arrays.asList("1;2;3","456;523;458", "782;861;973","755;770;753","729;783;758","761;720;783","751;813;749","869;750;794","823;726;769","847;770","730;771"));
+		Vector<String> coluna = new Vector<String>(Arrays.asList("1;2;3","456;523;458", "782;861;973","755;770;753","729;783;758","761;720;783","751;813;749","869;750;794","823;726;769","847;770;","730;771;"));
 		assertEquals(coluna, parser.getTextoFormatado());
 	}
 	

@@ -52,25 +52,32 @@ public class Parser {
 	}
 
 	public void converteColuna() throws IOException {
-		String linha;
-		matriz = new Vector<Vector<String>>();
-		BufferedReader br = new BufferedReader(new FileReader(arquivo));
-		matriz.add(new Vector<String>());
-		int i = 0;
-
-		while ((linha = br.readLine()) != null) {
-			if (linha.charAt(0) == '-') {
-				i = 0;
-				matriz.elementAt(i).add(linha.replaceAll("[^0-9]", ""));
-			} else {
-				if (matriz.size() < i + 1)
-					matriz.add(new Vector<String>());
-				matriz.elementAt(i).add(linha);
-			}
-			i++;
+		converteLinha();
+		Vector<Vector<String>> novaMatriz = new Vector<Vector<String>>();
+		int i, msc = 0;
+		
+		for (Vector<String> arr : matriz) {
+			msc = Math.max(msc, arr.size());
 		}
+		
+		for (Vector<String> arr : matriz) {
+			i = 0;		
 
-		br.close();
+			for (String str : arr) {
+				if (novaMatriz.size() < i + 1)
+					novaMatriz.add(new Vector<String>());
+				novaMatriz.elementAt(i).add(str);
+				i++;
+			}
+			
+			for (; i < msc; i++) {
+				if (novaMatriz.size() < i + 1)
+					novaMatriz.add(new Vector<String>());
+				novaMatriz.elementAt(i).add("");
+			}
+		}
+		
+		this.matriz = novaMatriz;
 	}
 
 	public void converteLinha() throws IOException {

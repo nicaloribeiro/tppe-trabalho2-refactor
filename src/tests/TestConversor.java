@@ -84,8 +84,8 @@ public class TestConversor {
 						new Vector<String>(Arrays.asList("751", "813", "749")),
 						new Vector<String>(Arrays.asList("869", "750", "794")),
 						new Vector<String>(Arrays.asList("823", "726", "769")),
-						new Vector<String>(Arrays.asList("847", "770")),
-						new Vector<String>(Arrays.asList("730", "771"))
+						new Vector<String>(Arrays.asList("847", "770", "")),
+						new Vector<String>(Arrays.asList("730", "771", ""))
 						)
 				);
 		parser.converteColuna();
