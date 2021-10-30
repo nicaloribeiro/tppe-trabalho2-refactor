@@ -22,7 +22,7 @@ public class Parser {
 
 	public void leArquivo(String nomeArquivo) throws ArquivoNaoEncontradoException {
 		this.nomeArquivo = nomeArquivo;
-		File arquivo = new File(nomeArquivo);
+		File arquivo = aberturaArquivo(nomeArquivo);
 
 		if (!arquivo.exists()) {
 			throw new ArquivoNaoEncontradoException(nomeArquivo + " não encontrado.");
@@ -30,6 +30,7 @@ public class Parser {
 			this.arquivo = arquivo;
 		}
 	}
+
 
 	public void definirDelimitador(String delimitador) throws DelimitadorInvalidoException {
 		if (delimitador.length() > 1) {
@@ -41,7 +42,7 @@ public class Parser {
 
 	public void criaArquivoSaida() throws EscritaNaoPermitidaException, IOException {
 		String nomeArquivoSaida = this.nomeArquivo.replace(".", "Tab.");
-		File arquivo = new File(nomeArquivoSaida);
+		File arquivo = aberturaArquivo(nomeArquivoSaida);
 		arquivo.createNewFile();
 
 		if (!arquivo.canWrite()) {
@@ -83,7 +84,7 @@ public class Parser {
 	public void converteLinha() throws IOException {
 		String linha;
 		matriz = new Vector<Vector<String>>();
-		BufferedReader br = new BufferedReader(new FileReader(arquivo));
+		BufferedReader br = leituraLinha();
 		Vector<String> evolucao = new Vector<String>();
 
 		while ((linha = br.readLine()) != null) {
@@ -113,7 +114,7 @@ public class Parser {
 		Vector<Integer> result = new Vector<Integer>();
 		int qtdEvolucoes = -1;
 		String linha = "";
-		BufferedReader br = new BufferedReader(new FileReader(this.arquivo));
+		BufferedReader br = leituraLinha();
 
 		do {
 			linha = br.readLine();
@@ -158,11 +159,27 @@ public class Parser {
 	}
 
 	public void escreveTextoSaida() throws IOException, EscritaNaoPermitidaException {
-		BufferedWriter bw = new BufferedWriter(new FileWriter(this.arquivoSaida));
+		BufferedWriter bw = escritaLinha();
 		for (String linha : this.textoFormatado) {
 			bw.write(linha);
 			bw.write("\n");
 		}
 		bw.close();
 	}
+
+	private BufferedWriter escritaLinha() throws IOException {
+		BufferedWriter bw = new BufferedWriter(new FileWriter(this.arquivoSaida));
+		return bw;
+	}
+	
+	private BufferedReader leituraLinha() throws FileNotFoundException {
+		BufferedReader br = new BufferedReader(new FileReader(this.arquivo));
+		return br;
+	}
+	
+	private File aberturaArquivo(String nomeArquivo) {
+		File arquivo = new File(nomeArquivo);
+		return arquivo;
+	}
+	
 }
