@@ -17,9 +17,11 @@ public class Parser {
 	private Vector<Vector<String>> matriz;
 	private Vector<String> textoFormatado;
 	private Persistencia persistencia;
+	private Conversor conversor;
 
 	public Parser() {
 		persistencia = new Persistencia();
+		conversor = new Conversor();
 	}
 	public void leArquivo(String nomeArquivo) throws ArquivoNaoEncontradoException {
 		persistencia.leituraArquivo(nomeArquivo);
@@ -27,7 +29,7 @@ public class Parser {
 
 	public void definirDelimitador(String delimitador) throws DelimitadorInvalidoException {
 		if (delimitador.length() > 1) {
-			throw new DelimitadorInvalidoException("O delimitador é inválido.");
+			throw new DelimitadorInvalidoException("O delimitador ï¿½ invï¿½lido.");
 		} else {
 			this.delimitador = delimitador;
 		}
@@ -38,58 +40,11 @@ public class Parser {
 	}
 
 	public void converteColuna() throws IOException {
-		converteLinha();
-		Vector<Vector<String>> novaMatriz = new Vector<Vector<String>>();
-		int i, msc = 0;
-		
-		for (Vector<String> arr : matriz) {
-			msc = Math.max(msc, arr.size());
-		}
-		
-		for (Vector<String> arr : matriz) {
-			i = 0;		
-
-			for (String str : arr) {
-				if (novaMatriz.size() < i + 1)
-					novaMatriz.add(new Vector<String>());
-				novaMatriz.elementAt(i).add(str);
-				i++;
-			}
-			
-			for (; i < msc; i++) {
-				if (novaMatriz.size() < i + 1)
-					novaMatriz.add(new Vector<String>());
-				novaMatriz.elementAt(i).add("");
-			}
-		}
-		
-		this.matriz = novaMatriz;
+		matriz = conversor.converteColuna(persistencia);
 	}
 
 	public void converteLinha() throws IOException {
-		String linha;
-		matriz = new Vector<Vector<String>>();
-		File arq = persistencia.getArquivo();
-		BufferedReader br = persistencia.leituraLinha(arq);
-		Vector<String> evolucao = new Vector<String>();
-		
-		while ((linha = br.readLine()) != null) {
-			if (linha.charAt(0) == '-') {
-				if (!evolucao.isEmpty()) {
-					matriz.add(evolucao);
-				}
-				evolucao = new Vector<String>();
-				evolucao.add(linha.replaceAll("[^0-9]", ""));
-			} else {
-				evolucao.add(linha);
-			}
-		}
-
-		if (!evolucao.isEmpty()) {
-			matriz.add(evolucao);
-		}
-
-		br.close();
+		matriz = conversor.converteLinha(persistencia);
 	}
 
 	public Vector<Vector<String>> getMatriz() {
@@ -148,8 +103,4 @@ public class Parser {
 	public void escreveTextoSaida() throws IOException, EscritaNaoPermitidaException {
 		persistencia.escreveTextoSaida(this.textoFormatado);
 	}
-
-
-	
-	
 }
