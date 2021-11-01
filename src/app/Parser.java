@@ -13,43 +13,28 @@ import java.util.Vector;
 import javax.sound.sampled.Line;
 
 public class Parser {
-	private String nomeArquivo;
-	private File arquivo;
-	private File arquivoSaida;
 	private String delimitador;
 	private Vector<Vector<String>> matriz;
 	private Vector<String> textoFormatado;
+	private Persistencia persistencia;
 
-	public void leArquivo(String nomeArquivo) throws ArquivoNaoEncontradoException {
-		this.nomeArquivo = nomeArquivo;
-		File arquivo = aberturaArquivo(nomeArquivo);
-
-		if (!arquivo.exists()) {
-			throw new ArquivoNaoEncontradoException(nomeArquivo + " nÃ£o encontrado.");
-		} else {
-			this.arquivo = arquivo;
-		}
+	public Parser() {
+		persistencia = new Persistencia();
 	}
-
+	public void leArquivo(String nomeArquivo) throws ArquivoNaoEncontradoException {
+		persistencia.leituraArquivo(nomeArquivo);
+	}
 
 	public void definirDelimitador(String delimitador) throws DelimitadorInvalidoException {
 		if (delimitador.length() > 1) {
-			throw new DelimitadorInvalidoException("O delimitador ï¿½ invï¿½lido.");
+			throw new DelimitadorInvalidoException("O delimitador é inválido.");
 		} else {
 			this.delimitador = delimitador;
 		}
 	}
-
+	
 	public void criaArquivoSaida() throws EscritaNaoPermitidaException, IOException {
-		String nomeArquivoSaida = this.nomeArquivo.replace(".", "Tab.");
-		File arquivo = aberturaArquivo(nomeArquivoSaida);
-		arquivo.createNewFile();
-
-		if (!arquivo.canWrite()) {
-			throw new EscritaNaoPermitidaException("Escrita nÃ£o permitida.");
-		} else {
-			this.arquivoSaida = arquivo;
-		}
+		persistencia.criaArquivoSaida();
 	}
 
 	public void converteColuna() throws IOException {
@@ -84,9 +69,10 @@ public class Parser {
 	public void converteLinha() throws IOException {
 		String linha;
 		matriz = new Vector<Vector<String>>();
-		BufferedReader br = leituraLinha();
+		File arq = persistencia.getArquivo();
+		BufferedReader br = persistencia.leituraLinha(arq);
 		Vector<String> evolucao = new Vector<String>();
-
+		
 		while ((linha = br.readLine()) != null) {
 			if (linha.charAt(0) == '-') {
 				if (!evolucao.isEmpty()) {
@@ -114,7 +100,8 @@ public class Parser {
 		Vector<Integer> result = new Vector<Integer>();
 		int qtdEvolucoes = -1;
 		String linha = "";
-		BufferedReader br = leituraLinha();
+		File arq = persistencia.getArquivo();
+		BufferedReader br = persistencia.leituraLinha(arq);
 
 		do {
 			linha = br.readLine();
@@ -159,27 +146,10 @@ public class Parser {
 	}
 
 	public void escreveTextoSaida() throws IOException, EscritaNaoPermitidaException {
-		BufferedWriter bw = escritaLinha();
-		for (String linha : this.textoFormatado) {
-			bw.write(linha);
-			bw.write("\n");
-		}
-		bw.close();
+		persistencia.escreveTextoSaida(this.textoFormatado);
 	}
 
-	private BufferedWriter escritaLinha() throws IOException {
-		BufferedWriter bw = new BufferedWriter(new FileWriter(this.arquivoSaida));
-		return bw;
-	}
+
 	
-	private BufferedReader leituraLinha() throws FileNotFoundException {
-		BufferedReader br = new BufferedReader(new FileReader(this.arquivo));
-		return br;
-	}
-	
-	private File aberturaArquivo(String nomeArquivo) {
-		File arquivo = new File(nomeArquivo);
-		return arquivo;
-	}
 	
 }
