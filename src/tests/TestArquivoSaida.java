@@ -80,6 +80,6 @@ private Parser parser;
 			arquivo.setWritable(true);
 		}
 		
-		assertEquals(message, "Escrita não permitida.");
+		assertEquals(message, "Escrita nao permitida.");
 	}
 }

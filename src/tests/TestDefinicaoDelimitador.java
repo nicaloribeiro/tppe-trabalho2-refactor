@@ -65,7 +65,7 @@ private Parser parser;
 			message = e.getMessage();
 		}
 		
-		assertEquals(message, "O delimitador é inválido.");
+		assertEquals(message, "O delimitador e invalido.");
 	}
 	
 

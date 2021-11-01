@@ -68,6 +68,6 @@ public class TestLeituraArquivo {
 			message = e.getMessage();
 		}
 		
-		assertEquals(message, "chambioá.out não encontrado.");
+		assertEquals(message, "chambioá.out nao encontrado.");
 	}
 }

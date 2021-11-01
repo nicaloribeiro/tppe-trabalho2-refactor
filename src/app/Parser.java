@@ -29,7 +29,7 @@ public class Parser {
 
 	public void definirDelimitador(String delimitador) throws DelimitadorInvalidoException {
 		if (delimitador.length() > 1) {
-			throw new DelimitadorInvalidoException("O delimitador � inv�lido.");
+			throw new DelimitadorInvalidoException("O delimitador e invalido.");
 		} else {
 			this.delimitador = delimitador;
 		}

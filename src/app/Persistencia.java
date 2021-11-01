@@ -20,7 +20,7 @@ public class Persistencia {
 		File arquivo = aberturaArquivo(nomeArquivo);
 
 		if (!arquivo.exists()) {
-			throw new ArquivoNaoEncontradoException(nomeArquivo + " não encontrado.");
+			throw new ArquivoNaoEncontradoException(nomeArquivo + " nao encontrado.");
 		} else {
 			setArquivo(arquivo);
 		}
@@ -56,7 +56,7 @@ public class Persistencia {
 		arquivo.createNewFile();
 
 		if (!arquivo.canWrite()) {
-			throw new EscritaNaoPermitidaException("Escrita não permitida.");
+			throw new EscritaNaoPermitidaException("Escrita nao permitida.");
 		} else {
 			setArquivoSaida(arquivo);
 		}
