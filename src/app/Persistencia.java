@@ -85,6 +85,4 @@ public class Persistencia {
 	public void setArquivoSaida(File arquivoSaida) {
 		this.arquivoSaida = arquivoSaida;
 	}
-
-
 }
